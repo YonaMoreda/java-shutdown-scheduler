@@ -15,39 +15,12 @@
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
-                <Menu mnemonicParsing="false" text="File">
+                <Menu mnemonicParsing="false" text="Window">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="New" />
-                        <MenuItem mnemonicParsing="false" text="Open…" />
-                        <Menu mnemonicParsing="false" text="Open Recent" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Close" />
-                        <MenuItem mnemonicParsing="false" text="Save" />
-                        <MenuItem mnemonicParsing="false" text="Save As…" />
-                        <MenuItem mnemonicParsing="false" text="Revert" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Preferences…" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Help" />
+                  <MenuItem mnemonicParsing="false" text="About" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Quit" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Undo" />
-                        <MenuItem mnemonicParsing="false" text="Redo" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Cut" />
-                        <MenuItem mnemonicParsing="false" text="Copy" />
-                        <MenuItem mnemonicParsing="false" text="Paste" />
-                        <MenuItem mnemonicParsing="false" text="Delete" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Select All" />
-                        <MenuItem mnemonicParsing="false" text="Unselect All" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
                     </items>
                 </Menu>
             </menus>
@@ -71,7 +44,7 @@
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
                                   <Label text="Minutes" />
-                                  <Label fx:id="minute_label" text="99">
+                                  <Label fx:id="minute_label" text="20">
                                  <font>
                                     <Font size="72.0" />
                                  </font>
@@ -81,7 +54,7 @@
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
                                   <Label text="Seconds" />
-                                  <Label fx:id="second_label" text="99">
+                                  <Label fx:id="second_label" text="00">
                                  <font>
                                     <Font size="72.0" />
                                  </font>
@@ -92,8 +65,8 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                      <children>
-                        <Button mnemonicParsing="false" prefWidth="70.0" text="Start" />
-                        <Button mnemonicParsing="false" prefWidth="70.0" text="Abort" />
+                        <Button fx:id="start_button" mnemonicParsing="false" prefWidth="70.0" text="Start" />
+                        <Button fx:id="abort_button" mnemonicParsing="false" prefWidth="70.0" text="Abort" />
                      </children>
                   </HBox>
                </children>

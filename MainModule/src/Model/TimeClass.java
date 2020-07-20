@@ -6,12 +6,10 @@ public class TimeClass {
     private int hours;
 
 
-
     public TimeClass(int totalSeconds) {
-//        TODO:: CONTINUE FROM HERE
-        this.hours = totalSeconds;
-        this.minutes = totalSeconds;
-        this.seconds = totalSeconds;
+        this.hours = totalSeconds / 3600;
+        this.minutes = (totalSeconds % 3600) / 60;
+        this.seconds = totalSeconds - (this.hours * 3600) - (this.minutes * 60);
     }
 
     public int getSeconds() {
