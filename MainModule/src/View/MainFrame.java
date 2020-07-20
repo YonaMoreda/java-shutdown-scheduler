@@ -39,42 +39,59 @@ public class MainFrame extends Application {
     public void start(Stage stage) throws Exception {
 
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("shutdown_scheduler.fxml")));
-
         Scene scene = new Scene(root, WIDTH, HEIGHT);
-//        scene.getStylesheets().add("stylesheet.css");
+        scene.getStylesheets().add("stylesheet.css");
+        getFXMLTimeLabels(scene);
 
+        totalTimeSeconds = Integer.parseInt(hourLabel.getText()) * 3600 + Integer.parseInt(minuteLabel.getText()) * 60 + Integer.parseInt(secondLabel.getText());
+        setLabelMouseClickedEvent(stage);
+        setStartAbortActions(scene);
+
+        setStageProperties(stage, scene);
+    }
+
+    private void setStageProperties(Stage stage, Scene scene) {
+        stage.setTitle("Shutdown Countdown - Scheduler");
+        stage.getIcons().add(new Image("shutdown-4.png"));
+        stage.setResizable(false);
+        stage.centerOnScreen();
+        stage.setScene(scene);
+        stage.setOnCloseRequest(windowEvent -> {
+            Platform.exit();
+            System.exit(0);
+        });
+        stage.show();
+    }
+
+    private void setStartAbortActions(Scene scene) {
+        Button startButton = (Button) scene.lookup("#start_button");
+        Button abortButton = (Button) scene.lookup("#abort_button");
+
+        startButton.setOnAction(actionEvent -> {
+            createAndStartTimer();
+            startButton.setDisable(true);
+            abortButton.setDisable(false);
+        });
+        abortButton.setOnAction(actionEvent -> {
+            timer.cancel();
+            startButton.setDisable(false);
+            abortButton.setDisable(true);
+        });
+    }
+
+    private void setLabelMouseClickedEvent(Stage stage) {
+        hourLabel.setOnMouseClicked(mouseEvent -> showTimeSelectionPopup(mouseEvent, stage, hourLabel, "Hour"));
+        minuteLabel.setOnMouseClicked(mouseEvent -> showTimeSelectionPopup(mouseEvent, stage, minuteLabel, "Minute"));
+        secondLabel.setOnMouseClicked(mouseEvent -> showTimeSelectionPopup(mouseEvent, stage, secondLabel, "Second"));
+    }
+
+    private void getFXMLTimeLabels(Scene scene) {
         hourLabel = (Label) scene.lookup("#hour_label");
         hourLabel.setFont(Font.loadFont(Objects.requireNonNull(getClass().getClassLoader().getResource("DigitalDisplay.ttf")).toExternalForm(), 100));
         minuteLabel = (Label) scene.lookup("#minute_label");
         minuteLabel.setFont(Font.loadFont(Objects.requireNonNull(getClass().getClassLoader().getResource("DigitalDisplay.ttf")).toExternalForm(), 100));
         secondLabel = (Label) scene.lookup("#second_label");
         secondLabel.setFont(Font.loadFont(Objects.requireNonNull(getClass().getClassLoader().getResource("DigitalDisplay.ttf")).toExternalForm(), 100));
-
-        totalTimeSeconds = Integer.parseInt(hourLabel.getText()) * 3600 + Integer.parseInt(minuteLabel.getText()) * 60 + Integer.parseInt(secondLabel.getText());
-
-        hourLabel.setOnMouseClicked(mouseEvent -> showTimeSelectionPopup(mouseEvent, stage, hourLabel, "Hour"));
-
-        minuteLabel.setOnMouseClicked(mouseEvent -> showTimeSelectionPopup(mouseEvent, stage, minuteLabel, "Minute"));
-
-        secondLabel.setOnMouseClicked(mouseEvent -> showTimeSelectionPopup(mouseEvent, stage, secondLabel, "Second"));
-
-        Button startButton = (Button) scene.lookup("#start_button");
-        startButton.setOnAction(actionEvent -> createAndStartTimer());
-
-        Button abortButton = (Button) scene.lookup("#abort_button");
-        abortButton.setOnAction(actionEvent -> timer.cancel());
-
-        stage.setTitle("Shutdown countdown scheduler");
-        stage.getIcons().add(new Image("shutdown-4.png"));
-        stage.setResizable(false);
-        stage.centerOnScreen();
-        stage.setScene(scene);
-        stage.show();
-
-        stage.setOnCloseRequest(windowEvent -> {
-            Platform.exit();
-            System.exit(0);
-        });
     }
 
     private void showTimeSelectionPopup(MouseEvent mouseEvent, Stage stage, Label label, String timeType) {
@@ -82,6 +99,8 @@ public class MainFrame extends Application {
             final Stage dialogStage = new Stage();
             dialogStage.initModality(Modality.APPLICATION_MODAL);
             dialogStage.initOwner(stage);
+            dialogStage.getIcons().add(new Image("shutdown-4.png"));
+
             Parent dialogRoot = null;
             try {
                 dialogRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("time_selection_popup.fxml")));
@@ -90,6 +109,8 @@ public class MainFrame extends Application {
             }
             assert dialogRoot != null;
             Scene dialogScene = new Scene(dialogRoot, 300, 200);
+            dialogScene.getStylesheets().add("stylesheet.css");
+
 
             TextField timeTextField = (TextField) dialogScene.lookup("#time_text_field");
             timeTextField.setFont(Font.loadFont(Objects.requireNonNull(getClass().getClassLoader().getResource("DigitalDisplay.ttf")).toExternalForm(), 74));
@@ -104,7 +125,8 @@ public class MainFrame extends Application {
 
             int timeChunk = switch (timeType) {
                 case "Hour" -> 1;
-                case "Minute", "Second" -> 10;
+                case "Minute" -> 5;
+                case "Second" -> 10;
                 default -> 0;
             };
 
@@ -120,21 +142,21 @@ public class MainFrame extends Application {
             Button minusButton = (Button) dialogScene.lookup("#minus_button");
             minusButton.setOnAction(actionEvent -> {
                 int newTime = Integer.parseInt(timeTextField.getText()) - timeChunk;
-                if (newTime >= 0) {
-                    if (newTime < 10) {
-                        timeTextField.setText("0".concat( String.valueOf(newTime)));
-                    } else {
-                        timeTextField.setText(String.valueOf(newTime));
-                    }
+                if (newTime < 0) {
+                    newTime = 0;
                 }
-            });
+                if (newTime < 10) {
+                    timeTextField.setText("0".concat(String.valueOf(newTime)));
+                } else {
+                    timeTextField.setText(String.valueOf(newTime));
+                }
 
+            });
             dialogStage.setTitle("Set the " + timeType);
             dialogStage.setScene(dialogScene);
             dialogStage.show();
         }
     }
-
 
     private void createAndStartTimer() {
         int delay = 1000;

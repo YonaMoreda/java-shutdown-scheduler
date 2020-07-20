@@ -66,7 +66,7 @@
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                      <children>
                         <Button fx:id="start_button" mnemonicParsing="false" prefWidth="70.0" text="Start" />
-                        <Button fx:id="abort_button" mnemonicParsing="false" prefWidth="70.0" text="Abort" />
+                        <Button fx:id="abort_button" disable="true" mnemonicParsing="false" prefWidth="70.0" text="Abort" />
                      </children>
                   </HBox>
                </children>

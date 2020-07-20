@@ -21,7 +21,7 @@
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <TextField fx:id="time_text_field" prefWidth="150.0" promptText="99">
+                        <TextField fx:id="time_text_field" prefWidth="150.0" promptText="00">
                            <font>
                               <Font size="64.0" />
                            </font>
