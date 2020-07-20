@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -43,8 +44,11 @@ public class MainFrame extends Application {
 //        scene.getStylesheets().add("stylesheet.css");
 
         hourLabel = (Label) scene.lookup("#hour_label");
+        hourLabel.setFont(Font.loadFont(Objects.requireNonNull(getClass().getClassLoader().getResource("DigitalDisplay.ttf")).toExternalForm(), 100));
         minuteLabel = (Label) scene.lookup("#minute_label");
+        minuteLabel.setFont(Font.loadFont(Objects.requireNonNull(getClass().getClassLoader().getResource("DigitalDisplay.ttf")).toExternalForm(), 100));
         secondLabel = (Label) scene.lookup("#second_label");
+        secondLabel.setFont(Font.loadFont(Objects.requireNonNull(getClass().getClassLoader().getResource("DigitalDisplay.ttf")).toExternalForm(), 100));
 
         totalTimeSeconds = Integer.parseInt(hourLabel.getText()) * 3600 + Integer.parseInt(minuteLabel.getText()) * 60 + Integer.parseInt(secondLabel.getText());
 
@@ -88,6 +92,7 @@ public class MainFrame extends Application {
             Scene dialogScene = new Scene(dialogRoot, 300, 200);
 
             TextField timeTextField = (TextField) dialogScene.lookup("#time_text_field");
+            timeTextField.setFont(Font.loadFont(Objects.requireNonNull(getClass().getClassLoader().getResource("DigitalDisplay.ttf")).toExternalForm(), 74));
             timeTextField.setText(label.getText());
 
             Button doneButton = (Button) dialogScene.lookup("#done_time_button");
