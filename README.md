@@ -1,5 +1,5 @@
 # java-shutdown-scheduler
-Small java javafx app to shutdown pc with a timer.
+Small simple javafx app to Shutdown, Lock, Sleep, Restart, Hibernate PC with a countdown.
 
 
 ![Image of screen shot](demo-screenshot.jpg)
