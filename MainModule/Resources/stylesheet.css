@@ -43,5 +43,29 @@
 }
 
 #abort_button:hover {
-    -fx-text-fill: white;
+    -fx-text-fill: #070707;
+}
+
+
+.text-area {
+    -fx-background-insets: 0;
+    -fx-background-color: transparent, #282828, transparent, #282828;
+}
+
+.text-area .content {
+    -fx-background-color: transparent, #282828, transparent, #282828;
+}
+
+.text-area:focused .content {
+    -fx-background-color: transparent, #282828, transparent, #282828;
+}
+
+.text-area:focused {
+    -fx-highlight-fill: #7ecfff;
+}
+
+.text-area .content {
+    -fx-padding: 10px;
+    -fx-text-fill: gray;
+    -fx-highlight-fill: #7ecfff;
 }
